@@ -1,0 +1,162 @@
+#include <stdio.h>
+
+void menu ();
+void moltiplica ();
+void dividi ();
+void ins_string();
+
+
+int main () 
+
+{
+	char scelta = {'\0'};
+	menu ();
+	scanf ("%d", &scelta);      					"%c"
+
+	switch (scelta)							'A' e 'a'
+	{
+		case 'A':
+		moltiplica();
+		break;
+		case 'B':
+                dividi();
+                break;
+		case 'C':
+                ins_string();
+                break;							default
+	}
+
+return 0;
+
+}
+
+
+void menu ()
+{
+	printf ("Benvenuto, sono un assitente digitale, posso aiutarti a sbrigare alcuni compiti\n");
+	printf ("Come posso aiutarti?\n");
+	printf ("A >> Moltiplicare due numeri\nB >> Dividere due numeri\nC >> Inserire una stringa\n");
+
+}
+
+
+void moltiplica ()
+{
+	short int  a,b = 0;
+	printf ("Inserisci i due numeri da moltiplicare:");
+	scanf ("%f", &a);      						"%hd"(su tutti)
+	scanf ("%d", &b);
+
+	short int prodotto = a * b;
+
+	printf ("Il prodotto tra %d e %d e': %d", a,b,prodotto);
+}
+
+
+void dividi ()
+{
+        int  a,b = 0;							('a','b' != 0) 
+        printf ("Inserisci il numeratore:");				
+        scanf ("%d", &a);
+	printf ("Inserisci il denumeratore:");    			(denominatore)
+        scanf ("%d", &b);
+									if ( b == 0) return;
+
+        int divisione = a % b;        					a / b
+
+        printf ("La divisione tra %d e %d e': %d", a,b,divisione);
+}
+
+
+
+
+
+void ins_string () 
+{
+	char stringa[10];
+        printf ("Inserisci la stringa:");
+        scanf ("%s", &stringa);     
+}
+
+
+ERRORI VISUALIZZATI: Ci sono alcuni errori di logica e sintassi e abbiamo apportato qualche modifica per rendere il codice più corretto/funzionale. In ordine di come si presentano:
+Ogni variabile ha il suo segnaposto corrispondente. Il segnaposto per la variabile char è: %c; mentre il segnaposto %d corrisponde alla variabile int.
+Successivamente abbiamo aggiunto librerie affinchè potessimo disabilitare il case-sensitive. Così l'utente potrà digitare la sua scelta sia in 'MAIUSCOLO' sia in 'minuscolo'. Abbiamo aggiunto un blocco di istruzioni "default" nel caso in cui l'utente sbaglia a digitare tra le opzioni da scegliere.
+Per lo stesso motivo di prima abbiamo corretto i segnaposti per la variabile short int. Il segnaposto per la variabile short int è %hd.Il segnaposto %d è per la variabile int.
+Altro errore di concetto lo troviamo nelle variabili int di void dividi (). Nella prima variabile int troviamo 'a,b = 0', errore logico perchè è errato dividere per 0. Quindi correggiamo con un semplice 'int a,b;'. Troviamo un semplice errore(denumeratore) invece di (denominatore). Nella seconda variabile int abbiamo corretto 'a%b' in 'a/b'. La % sta ad indicare il modulo.
+ Il modulo divide due numeri a,b e restituisce come risultato il resto. Mentre lo / sta ad indicare la divisione come richiedava la variabile. Nella void dividi () abbiamo aggiunto anche un istruzione di controllo condizionale if affinche il valore b sia diverso da 0. Nel caso in cui il valore b è uguale a 0 partirà un comando stampa printf con l'errore in questione.
+
+Qui di seguito il le correzioni e le varie aggiunte
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void menu();
+void moltiplica();
+void dividi();
+void ins_string();
+
+int main() {
+    char scelta = '\0';
+    menu();
+    scanf(" %c", &scelta);
+    scelta=toupper(scelta);
+    switch (scelta) {
+        case 'A':
+            moltiplica();
+            break;
+        case 'B':
+            dividi();
+            break;
+        case 'C':
+            ins_string();
+            break;
+        default:
+            printf("Opzione non prevista");
+    }
+
+    return 0;
+}
+
+void menu() {
+    printf("Benvenuto, sono un assistente digitale, posso aiutarti a sbrigare alcuni compiti\n");
+    printf("Come posso aiutarti?\n");
+    printf("A >> Moltiplicare due numeri\nB >> Dividere due numeri\nC >> Inserire una stringa\n");
+}
+
+void moltiplica() {
+    short int a, b;
+    printf("Inserisci i due numeri da moltiplicare:");
+    scanf("%hd %hd", &a, &b);
+
+    short int prodotto = a * b;
+
+    printf("Il prodotto tra %hd e %hd e': %hd\n", a, b, prodotto);
+}
+
+void dividi() {
+    int a, b;
+    printf("Inserisci il numeratore:");
+    scanf("%d", &a);
+    printf("Inserisci il denominatore:");
+    scanf("%d", &b);
+    if (b == 0) {
+        printf("Errore: divisione per zero.\n");
+        return;
+    }
+
+    int divisione = a / b;
+
+    printf("La divisione tra %d e %d e': %d\n", a, b, divisione);
+}
+
+void ins_string() {
+    char stringa[11]; 
+
+    printf("Inserisci la stringa: ");
+    getchar();
+    scanf("%10[^\n]", stringa);
+
+    printf("Hai inserito: %s\n", stringa);
+ 
